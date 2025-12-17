@@ -27,17 +27,22 @@ async function uploadMessageToS3(messageId: string, rawMessage: string) {
 
 export function extractEmailMetaFromRawHtml(rawHtml: string): EmailMeta {
   const text = rawHtml.replace(/\r\n/g, "\n");
-  const subjectMatch = text.match(/^Subject:\s*(.+)$/im);
+
+  const subjectMatch = /^Subject:\s*(.+)$/im.exec(text);
   const subject = subjectMatch?.[1]?.trim() ?? null;
-  const fromMatch = text.match(/^From:\s*(.+)$/im);
+
+  const fromMatch = /^From:\s*(.+)$/im.exec(text);
   let fromName: string | null = null;
+
   if (fromMatch?.[1]) {
     const fromValue = fromMatch[1].trim();
-    const nameMatch = fromValue.match(/^(.*?)(?:\s*<.+>)$/);
+    const nameMatch = /^(.*?)(?:\s*<.+>)$/.exec(fromValue);
+
     if (nameMatch?.[1]) {
       fromName = nameMatch[1].replace(/"/g, "").trim();
     }
   }
+
   return {
     subject,
     fromName,
@@ -53,8 +58,8 @@ async function getObjectFromS3(key: string): Promise<string> {
     const response = await s3.send(command);
     const stream = response.Body as Readable;
     const chunks: Buffer[] = [];
-    for await (const chunk of stream) {
-        chunks.push(Buffer.from(chunk));
+    for await (const chunk of stream as AsyncIterable<Uint8Array>) {
+    chunks.push(Buffer.from(chunk));
     }
     return Buffer.concat(chunks).toString("utf-8");
 }
@@ -123,14 +128,14 @@ export const gmailRouter = createTRPCRouter({
                         const {data: fullMsg } = await gmail.users.messages.get({userId: "me", id: message.id, format: "raw"})
                         if (!fullMsg.id) throw new Error("FullMessage id missing")
                         if (i===0) {
-                            const {fromName: displayName, subject: subjectLine} = extractEmailMetaFromRawHtml(fullMsg.raw || "")
+                            const {fromName: displayName, subject: subjectLine} = extractEmailMetaFromRawHtml(fullMsg.raw ?? "")
                             console.log("this is displayName: ", displayName);
                             console.log("this is subjectLine: ", subjectLine);
                             await ctx.db.thread.update({
                                 where: {id: threadId},
                                 data: {
-                                    displayName: displayName || "",
-                                    subjectLine: subjectLine || ""
+                                    displayName: displayName ?? "",
+                                    subjectLine: subjectLine ?? ""
                                 }
                             })
                         }
