@@ -64,6 +64,7 @@ model User {
     accounts      Account[]
     sessions      Session[]
     posts         Post[]
+    threads       Thread[]
 }
 
 model VerificationToken {
@@ -73,3 +74,30 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+model Thread {
+    id          String     @id
+    userId      String
+    user        User        @relation(fields: [userId], references: [id])       
+    snippet     String
+    historyId   String
+    messages    Message[]    
+    runId       String 
+    displayName String
+    subjectLine String
+}
+
+model Message {
+     id          String      @id
+     threadId    String      
+     thread      Thread      @relation(fields: [threadId], references: [id])
+     labelIds    String[]    
+     snippet     String
+     historyId   String
+     internalDate String
+     sizeEstimate  Int
+     runId        String  
+}
+
+
+

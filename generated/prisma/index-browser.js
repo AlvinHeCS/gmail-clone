@@ -166,6 +166,27 @@ exports.Prisma.VerificationTokenScalarFieldEnum = {
   expires: 'expires'
 };
 
+exports.Prisma.ThreadScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  snippet: 'snippet',
+  historyId: 'historyId',
+  runId: 'runId',
+  displayName: 'displayName',
+  subjectLine: 'subjectLine'
+};
+
+exports.Prisma.MessageScalarFieldEnum = {
+  id: 'id',
+  threadId: 'threadId',
+  labelIds: 'labelIds',
+  snippet: 'snippet',
+  historyId: 'historyId',
+  internalDate: 'internalDate',
+  sizeEstimate: 'sizeEstimate',
+  runId: 'runId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -187,7 +208,9 @@ exports.Prisma.ModelName = {
   Account: 'Account',
   Session: 'Session',
   User: 'User',
-  VerificationToken: 'VerificationToken'
+  VerificationToken: 'VerificationToken',
+  Thread: 'Thread',
+  Message: 'Message'
 };
 
 /**

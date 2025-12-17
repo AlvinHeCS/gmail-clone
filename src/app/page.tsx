@@ -1,11 +1,11 @@
 
+
 import { auth } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
 import LoginButton from "./_components/loginButton";
 import { SessionProvider } from "next-auth/react";
 
 export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
   const session = await auth();
 
   if (session?.user) {
@@ -16,7 +16,6 @@ export default async function Home() {
     <SessionProvider>
       <HydrateClient>
         <div>
-          Hello
           <LoginButton />
         </div>
       </HydrateClient>
