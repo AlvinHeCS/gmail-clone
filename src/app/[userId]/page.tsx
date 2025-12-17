@@ -14,7 +14,7 @@ export default function Dashboard() {
     const { data: threads, isLoading: loadingEmails } = api.gmail.getThreads.useQuery();
     
     useEffect(() => {
-        mutateAsyncInitalSync();
+        void mutateAsyncInitalSync();
     }, [])
 
 
