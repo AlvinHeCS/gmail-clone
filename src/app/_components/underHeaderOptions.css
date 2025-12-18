@@ -1,0 +1,34 @@
+.underHeaderOptionsButton {
+    border-radius: 5px;
+    border: solid #757775 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 2px;
+    font-size: 13px;
+    padding-left: 8px;
+    padding-right: 8px;
+    height: 30px;
+    color: #454746;
+    box-shadow: none !important;
+}
+
+.underHeaderOptionsButton:hover {
+    background-color: #EBEDF0;
+    cursor: pointer;
+}
+
+.advancedSearchButton {
+    color: #0957D0;
+    border-radius: 10px;
+    font-size: 11px;
+    margin-left: 5px;
+    padding: 5px;
+    box-shadow: none !important;
+}
+
+.advancedSearchButton:hover {
+    background-color: #E7EEFC;
+    cursor: pointer;
+}

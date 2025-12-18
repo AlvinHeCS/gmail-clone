@@ -1,0 +1,9 @@
+
+
+.rightBarOption {
+    box-shadow: none !important;
+}
+
+.rightBarOption:hover {
+    cursor: pointer
+}

@@ -2,7 +2,6 @@
 .headerContainer {
     width: 100%;
     padding: 8px;
-    border: solid black 1px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -10,15 +9,15 @@
 }
 
 .headerHamburger {
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
-    padding: 12px;
     margin: 0 4px;
     display: flex;
     cursor: pointer;
     justify-content: center;
     align-items: center;
+    box-shadow: none !important;
 }
 .headerHamburger:hover {
     background-color: rgb(225, 225, 225);
@@ -26,14 +25,14 @@
 
 .headerSearchBar {
     height: 48px;
-    border: solid black 1px;
-    border-radius: 100px;
+    border-radius: 100px;  
     width: 700px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px;
     background-color: #E9EEF6;
+    box-shadow: none !important;
 }
 
 .searchBarInput {
@@ -46,6 +45,7 @@
     height: 30px;
     border-radius: 50%;
     padding: 5px;
+    box-shadow: none !important;
 }
 
 .searchBarIcons:hover {
@@ -58,6 +58,7 @@
     height: 30px;
     border-radius: 50%;
     padding: 5px;
+    box-shadow: none !important;
 }
 
 .dotGridIcon {

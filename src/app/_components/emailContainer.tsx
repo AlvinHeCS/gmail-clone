@@ -4,6 +4,7 @@ import { useState } from "react"
 import OpenedThread from "./openedThread";
 import "./emailContainer.css";
 import type { Thread } from "~/types/types";
+import UnderHeaderOptions from "./underHeaderOptions";
 
 interface prop {
     threads: Thread[]
@@ -16,18 +17,23 @@ export default function EmailContainer(emailContainerProp: prop) {
         setSelectedThread(thread)
         setThreadOpened(true)
     }
-
+    const height = window.innerHeight - 64; 
     return (
-        <div style={{width: "calc(100% - 187px - 56px)", border: "solid green 1px", overflowY: "auto", display: "flex", flexDirection: "column"}}>
-            {ThreadOpened && selectedThread
-                ? <OpenedThread thread={selectedThread}/>
-                : (emailContainerProp.threads).map((thread) => {
-                    return (
-                        <button className="thread" onClick={() => clickButton(thread)}style={{display: "flex", gap: "10px", border: "solid black 1px", height: "40px", overflowX: "hidden"}} key={thread.id}>Name:{thread.displayName} Subject:{thread.subjectLine}</button>
-                    )
-                })
-            }
+    <div style={{borderRadius: "10px", width: "calc(100% - 187px - 56px)", height: `${height}px`, display: "flex", flexDirection: "column"}}>
+        <UnderHeaderOptions />
+        <div style={{width: "100%", height: `calc(${height}px - 100px)`,overflowY: "auto", display: "flex", flexDirection: "column"}}>
+            <div style={{ flex: "1 1 auto", overflowY: "auto", width: "100%"}}>
+                {ThreadOpened && selectedThread
+                    ? <OpenedThread thread={selectedThread}/>
+                    : (emailContainerProp.threads).map((thread) => {
+                        return (
+                            <button className="thread" onClick={() => clickButton(thread)} key={thread.id}>Name:{thread.displayName} Subject:{thread.subjectLine}</button>
+                        )
+                    })
+                }
+            </div>
         </div>
+    </div>
         
     )
 }

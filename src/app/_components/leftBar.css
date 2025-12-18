@@ -1,0 +1,38 @@
+
+.composeButton {
+    width: 120px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: #C2E7FF;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    font-size: 13px; 
+    margin-top: 10px;
+}
+
+.composeButton:hover {
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.leftBarOption {
+    display: flex;
+    gap: 10px;
+    font-size: 12px;
+    align-items: center;
+    width: 90%;
+    padding: 5px;
+    padding-left: 25px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    box-shadow: none !important;
+}
+
+.leftBarOption:hover {
+    background-color: #EBEDF0;
+    cursor: pointer;
+}

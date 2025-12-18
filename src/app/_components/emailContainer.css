@@ -1,8 +1,18 @@
 .thread {
-
+    display: flex;
+    gap: 10px;
+    border-top: solid #EBEBEB 1px;
+    border-bottom: solid #EBEBEB 1px;
+    height: 40px;
+    overflow: hidden;
+    align-items: center;
+    width: 100%;
+    box-shadow: none !important;
 }
 
 .thread:hover {
-    background: grey;
+    background: #EBEDF0;
     cursor: pointer;
 }
+
+
