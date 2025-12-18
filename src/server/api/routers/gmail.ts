@@ -26,27 +26,31 @@ async function uploadMessageToS3(messageId: string, rawMessage: string) {
 }
 
 export function extractEmailMetaFromRawHtml(rawHtml: string): EmailMeta {
-  const text = rawHtml.replace(/\r\n/g, "\n");
+   
+   let from;
+   let subject;
+    const base64String = rawHtml
+        .replace(/-/g, "+")
+        .replace(/_/g, "/");
 
-  const subjectMatch = /^Subject:\s*(.+)$/im.exec(text);
-  const subject = subjectMatch?.[1]?.trim() ?? null;
-
-  const fromMatch = /^From:\s*(.+)$/im.exec(text);
-  let fromName: string | null = null;
-
-  if (fromMatch?.[1]) {
-    const fromValue = fromMatch[1].trim();
-    const nameMatch = /^(.*?)(?:\s*<.+>)$/.exec(fromValue);
-
-    if (nameMatch?.[1]) {
-      fromName = nameMatch[1].replace(/"/g, "").trim();
+    // Decode to a UTF-8 string
+    const decodedHtml = Buffer.from(base64String, "base64").toString("utf-8");
+    // console.log("this is decoded HTML: ", decodedHtml)
+    const subjectPattern = /^Subject:\s*(.*)$/im;
+    const subjectMatch = subjectPattern.exec(decodedHtml);
+    if (subjectMatch) {
+        subject = subjectMatch[1]
     }
-  }
+    const fromPattern = /From: (.*?) </
+    const fromMatch = fromPattern.exec(decodedHtml)
+    if (fromMatch) {
+       from = fromMatch[1]
+    }
 
-  return {
-    subject,
-    fromName,
-  };
+    return {
+        subject: subject ? subject : null,
+        fromName: from ? from : null
+    };
 }
 
 async function getObjectFromS3(key: string): Promise<string> {
@@ -129,8 +133,7 @@ export const gmailRouter = createTRPCRouter({
                         if (!fullMsg.id) throw new Error("FullMessage id missing")
                         if (i===0) {
                             const {fromName: displayName, subject: subjectLine} = extractEmailMetaFromRawHtml(fullMsg.raw ?? "")
-                            console.log("this is displayName: ", displayName);
-                            console.log("this is subjectLine: ", subjectLine);
+
                             await ctx.db.thread.update({
                                 where: {id: threadId},
                                 data: {

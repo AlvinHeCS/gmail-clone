@@ -23,7 +23,7 @@ export default function EmailContainer(emailContainerProp: prop) {
                 ? <OpenedThread thread={selectedThread}/>
                 : (emailContainerProp.threads).map((thread) => {
                     return (
-                        <button className="thread" onClick={() => clickButton(thread)}style={{display: "flex", gap: "10px", border: "solid black 1px", height: "40px", overflowX: "hidden"}} key={thread.id}>Name:{thread.displayName} Subject:{thread.subjectLine} Snippet:{thread.messages[0]?.snippet}</button>
+                        <button className="thread" onClick={() => clickButton(thread)}style={{display: "flex", gap: "10px", border: "solid black 1px", height: "40px", overflowX: "hidden"}} key={thread.id}>Name:{thread.displayName} Subject:{thread.subjectLine}</button>
                     )
                 })
             }
