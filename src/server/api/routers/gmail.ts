@@ -48,8 +48,8 @@ export function extractEmailMetaFromRawHtml(rawHtml: string): EmailMeta {
     }
 
     return {
-        subject: subject ? subject : null,
-        fromName: from ? from : null
+        subject: subject ?? null,
+        fromName: from ?? null
     };
 }
 
